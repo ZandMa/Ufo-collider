@@ -41,6 +41,10 @@ class Game {
                 this.player.moveLeft();
             } else if (event.key === "ArrowRight") {
                 this.player.moveRight();
+            }else if (event.key === "ArrowUp"){
+                this.player.movesUp();
+            }else if (event.key === "ArrowDown"){
+                this.player.moveDown();
             }
             this.drawDomElm(this.player);
         });
@@ -104,7 +108,7 @@ class Player {
         if (this.positionX > 0) {
             this.positionX -= 5;
         } else {
-            console.log("Can't move outside playspace")
+            console.log("Can't move outside playspace!")
         }
 
     }
@@ -112,9 +116,22 @@ class Player {
         if (this.positionX <= 60) {
             this.positionX += 5;
         } else {
-            console.log("Can't move outside playspace")
+            console.log("Can't move outside playspace!")
         }
 
+    }
+    movesUp(){
+        if(this.positionY <= 25){
+            this.positionY +=5;
+        } else {
+            console.log("Can't move outside playspace!")
+        }
+        
+    }
+    moveDown(){
+        if (this.positionY >= 0){
+            this.positionY -= 5;
+        }
     }
 }
 
@@ -132,7 +149,7 @@ class Obstacle {
         this.positionY -= 1;
     }
     deletObstacle(element, arr) {
-        if (element.positionY < 0) {
+        if (element.positionY < 0.5) {
             element.domElement.remove()
             arr.shift(element)
         }
