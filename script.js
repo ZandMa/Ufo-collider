@@ -1,14 +1,14 @@
 class Game {
-    constructor(){
+    constructor() {
         this.obstaclesArr = [];
         this.obstacleSpeed = 65;
         this.obstacleSpawnRate = 600;
     }
-   
+
 
 
     start() {
-        this.player = new Player(); 
+        this.player = new Player();
         this.player.domElement = this.createDomElm(this.player);
         this.drawDomElm(this.player);
 
@@ -29,8 +29,8 @@ class Game {
                 }, this.obstacleSpeed)
             })
         }, this.obstacleSpawnRate);
-        
-        
+
+     this.score()
     }
 
 
@@ -45,34 +45,45 @@ class Game {
         });
     }
     createDomElm(instance) {
-        const htmlTag = document.createElement("div"); 
+        const htmlTag = document.createElement("div");
         htmlTag.className = instance.className;
         htmlTag.style.width = instance.width + "vw";
         htmlTag.style.height = instance.height + "vh";
         const board = document.getElementById("board");
-        board.appendChild(htmlTag); 
+        board.appendChild(htmlTag);
         return htmlTag;
     }
     drawDomElm(instance) {
         instance.domElement.style.left = instance.positionX + "vw";
         instance.domElement.style.bottom = instance.positionY + "vh";
     }
-    detectCollisionWithPlayer(astroid){
+    detectCollisionWithPlayer(astroid) {
         if (this.player.positionX < astroid.positionX + astroid.width &&
             this.player.positionX + this.player.width > astroid.positionX &&
             this.player.positionY < astroid.positionY + astroid.height &&
             this.player.height + this.player.positionY > astroid.positionY) {
-                //let reaload = document.getElementById("board")#
-                //location.reload();
+            //let reaload = document.getElementById("board")#
+            location.reload();
 
-            
-            
+
+
         }
     }
-    
-    }
+    score() {
+        let count = document.getElementById("score")
+        console.log(count)
+        let counter = 0;
+        setInterval(() => {
+            
+            counter += 100 ;
+            count.innerHTML = counter;
+            
+        }, 1000)
 
-  
+    }
+}
+
+
 
 class Player {
     constructor() {
@@ -84,20 +95,20 @@ class Player {
         this.domElement = null;
     }
     moveLeft() {
-        if (this.positionX > 0){
+        if (this.positionX > 0) {
             this.positionX -= 5;
         } else {
             console.log("Can't move outside playspace")
         }
-        
+
     }
     moveRight() {
-        if (this.positionX <= 60){
+        if (this.positionX <= 60) {
             this.positionX += 5;
-        } else{
+        } else {
             console.log("Can't move outside playspace")
         }
-        
+
     }
 }
 
@@ -106,7 +117,7 @@ class Obstacle {
         this.className = "obstacle";
         this.width = 5;
         this.height = 5;
-        this.positionX = Math.floor(Math.random() * (70  - this.width + 1 ));
+        this.positionX = Math.floor(Math.random() * (70 - this.width + 1));
         this.positionY = 85;
         this.domElement = null;
     }
@@ -114,12 +125,12 @@ class Obstacle {
     moveDown() {
         this.positionY -= 1;
     }
-    deletObstacle(element, arr){
-        if(element.positionY < 0){
-        element.domElement.remove()
-         arr.shift(element)
-        } 
-    
+    deletObstacle(element, arr) {
+        if (element.positionY < 0) {
+            element.domElement.remove()
+            arr.shift(element)
+        }
+
     }
 }
 const game = new Game();

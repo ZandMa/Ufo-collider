@@ -1,9 +1,11 @@
 body {
     overflow: hidden;
     visibility: visible;
-    background: url("./media/background.jpg");
-    background-size: 100vw;
+    background-image: url("./media/background.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
+    position: relative;
+    height: 100vh;
     
 }
 
@@ -36,11 +38,12 @@ body {
     display: inline-block;
     
 }
-#youLose {
-    z-index: 0;
+#gameOver {
+    z-index: 100;
     height: 100vh;
-    height: 600px;
     margin:auto;
+    position: absolute;
+    text-align: center;
     
 }
 
@@ -49,7 +52,6 @@ body {
     text-align: center;
     margin: 0px;
     color: red;
-    position: relative;
     
 }
 
@@ -57,4 +59,8 @@ body {
     font-size: 5vh;
     position: relative;
     margin: 0;
+}
+
+.score-box{
+    font-size: 5vh;
 }
