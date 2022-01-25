@@ -33,7 +33,7 @@ body {
 .obstacle {
     position: absolute;
     background: url(./media/block.png);
-    background-size: 4vw;
+    background-size: 100%;
     border-radius: 50px;
     display: inline-block;
     

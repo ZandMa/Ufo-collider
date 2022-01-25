@@ -3,6 +3,7 @@ class Game {
         this.obstaclesArr = [];
         this.obstacleSpeed = 65;
         this.obstacleSpawnRate = 600;
+        this.bulletArr = [];
     }
 
 
@@ -52,15 +53,15 @@ class Game {
     createDomElm(instance) {
         const htmlTag = document.createElement("div");
         htmlTag.className = instance.className;
-        htmlTag.style.width = instance.width + "vw";
-        htmlTag.style.height = instance.height + "vh";
+        htmlTag.style.width = instance.width + "%";
+        htmlTag.style.height = instance.height + "%";
         const board = document.getElementById("board");
         board.appendChild(htmlTag);
         return htmlTag;
     }
     drawDomElm(instance) {
-        instance.domElement.style.left = instance.positionX + "vw";
-        instance.domElement.style.bottom = instance.positionY + "vh";
+        instance.domElement.style.left = instance.positionX + "%";
+        instance.domElement.style.bottom = instance.positionY + "%";
     }
     detectCollisionWithPlayer(astroid) {
         if (this.player.positionX < astroid.positionX + astroid.width &&
@@ -68,7 +69,7 @@ class Game {
             this.player.positionY < astroid.positionY + astroid.height &&
             this.player.height + this.player.positionY > astroid.positionY) {
             //let reaload = document.getElementById("board")#
-            location.reload();
+            //location.reload();
 
 
 
@@ -88,9 +89,9 @@ class Game {
     }
     audioVolume(){
         let audio = document.getElementById("myaudio");
-        audio.volume = 0.2;
+        audio.volume = 0.1;
+        
     }
-    
 }
 
 
@@ -100,7 +101,7 @@ class Player {
         this.className = "player";
         this.width = 5;
         this.height = 5;
-        this.positionX = 40;
+        this.positionX = 50;
         this.positionY = -1;
         this.domElement = null;
     }
@@ -113,7 +114,7 @@ class Player {
 
     }
     moveRight() {
-        if (this.positionX <= 60) {
+        if (this.positionX <= 90) {
             this.positionX += 5;
         } else {
             console.log("Can't move outside playspace!")
@@ -156,6 +157,9 @@ class Obstacle {
 
     }
 }
+
+
+
 const game = new Game();
 game.start();
 
