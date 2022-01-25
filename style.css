@@ -1,0 +1,60 @@
+body {
+    overflow: hidden;
+    visibility: visible;
+    background: url("./media/background.jpg");
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    
+}
+
+#board {
+    height: 70vh;
+    width: 70vw;
+    margin: 0 0 0 15vw;
+    border: solid black 1px;
+    z-index: 1;
+    overflow: hidden;
+    background: url("./media/wp7872665.webp");
+    background-size: 72vw;
+    position: relative;
+    z-index: 3;
+    background-repeat: no-repeat;
+}
+
+.player {
+    position: absolute;
+    background: url("./media/ufo-marten.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.obstacle {
+    position: absolute;
+    background: url(./media/block.png);
+    background-size: 90px;
+    border-radius: 50px;
+    display: inline-block;
+    
+}
+#youLose {
+    z-index: 0;
+    height: 100vh;
+    height: 600px;
+    margin:auto;
+    
+}
+
+.name{
+    font-size: 45px;
+    text-align: center;
+    margin: 0px;
+    color: red;
+    position: relative;
+    
+}
+
+#score{
+    font-size: 5vh;
+    position: relative;
+    margin: 0;
+}
