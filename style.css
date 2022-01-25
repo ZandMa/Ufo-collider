@@ -70,3 +70,8 @@ body button{
 .score-box{
     font-size: 5vh;
 }
+
+.bullets {
+    position: absolute;
+    color: white;
+}

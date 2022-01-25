@@ -48,6 +48,10 @@ class Game {
                 this.player.moveDown();
             }
             this.drawDomElm(this.player);
+
+            if (event.key === "Space"){
+                this.shoot()
+            }
         });
     }
     createDomElm(instance) {
@@ -91,6 +95,11 @@ class Game {
         let audio = document.getElementById("myaudio");
         audio.volume = 0.1;
         
+    }
+    shoot(){
+        let bullet = new Bullet();
+        bullet.domElement = this.createDomElm(bullet);
+        this.drawDomElm(bullet);
     }
 }
 
@@ -141,7 +150,7 @@ class Obstacle {
         this.className = "obstacle";
         this.width = 5;
         this.height = 5;
-        this.positionX = Math.floor(Math.random() * (70 - this.width + 1));
+        this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
         this.positionY = 85;
         this.domElement = null;
     }
@@ -155,6 +164,17 @@ class Obstacle {
             arr.shift(element)
         }
 
+    }
+}
+
+class Bullet{
+    constructor() {
+        this.className = "bullets"
+        this.width  = 1;
+        this.height = 2;
+        this.positionX = this.player.positionX + 2,5
+        this.positionY = this.player.positionY
+        this.domElement = null;
     }
 }
 
