@@ -31,6 +31,7 @@ class Game {
         }, this.obstacleSpawnRate);
 
      this.score()
+     this.audioVolume()
     }
 
 
@@ -81,6 +82,11 @@ class Game {
         }, 1000)
 
     }
+    audioVolume(){
+        let audio = document.getElementById("myaudio");
+        audio.volume = 0.2;
+    }
+    
 }
 
 
