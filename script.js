@@ -1,9 +1,11 @@
 class Game {
     constructor() {
         this.obstaclesArr = [];
-        this.obstacleSpeed = 65;
+        this.refreshRate = 1000 / 30;
         this.obstacleSpawnRate = 600;
         this.bulletArr = [];
+        this.time = 0;
+        this.intervalId = null;
     }
 
 
@@ -16,23 +18,39 @@ class Game {
 
         this.addEventListeners();
 
-        setInterval(() => {
-            const newObstacle = new Obstacle();
-            this.obstaclesArr.push(newObstacle);
-            newObstacle.domElement = this.createDomElm(newObstacle);
-            this.drawDomElm(newObstacle);
-            this.obstaclesArr.forEach((obstacle) => {
-                setInterval(() => {
-                    obstacle.moveDown();
-                    this.drawDomElm(obstacle);
-                    this.detectCollisionWithPlayer(obstacle);
-                    obstacle.deletObstacle(obstacle, this.obstaclesArr);
-                }, this.obstacleSpeed)
-            })
-        }, this.obstacleSpawnRate);
+        this.intervalId = setInterval(() => {
+            this.time++;
 
-     this.score()
-     this.audioVolume()
+            // create obstacles
+            if(this.time % 10 === 0){
+                const newObstacle = new Obstacle();
+                this.obstaclesArr.push(newObstacle);
+                newObstacle.domElement = this.createDomElm(newObstacle);
+                this.drawDomElm(newObstacle);
+            }
+           
+            // iterate through obstaclesArr
+            this.obstaclesArr.forEach((obstacle, i) => {
+                obstacle.deletObstacle(obstacle, this.obstaclesArr, i);
+                obstacle.moveDown();
+                this.drawDomElm(obstacle);
+                this.detectCollisionWithPlayer(obstacle);
+                this.bulletdetectCollision(obstacle)                
+            })
+
+            // iterate throuh bulletArr
+            this.bulletArr.forEach((bullet, index) => {
+                bullet.bulletMoveUp();
+                this.drawDomElm(bullet);
+                bullet.deletBullet(bullet, this.bulletArr, index);
+            })
+            
+            this.updateScore();
+
+        }, this.refreshRate);
+
+        
+        this.audioVolume()
     }
 
 
@@ -42,15 +60,18 @@ class Game {
                 this.player.moveLeft();
             } else if (event.key === "ArrowRight") {
                 this.player.moveRight();
-            }else if (event.key === "ArrowUp"){
+            } else if (event.key === "ArrowUp") {
                 this.player.movesUp();
-            }else if (event.key === "ArrowDown"){
+            } else if (event.key === "ArrowDown") {
                 this.player.moveDown();
+            } else if (event.key === " ") {
+                this.shoot();
+
             }
             this.drawDomElm(this.player);
         });
     }
-    
+
     createDomElm(instance) {
         const htmlTag = document.createElement("div");
         htmlTag.className = instance.className;
@@ -71,49 +92,57 @@ class Game {
             this.player.positionX + this.player.width > astroid.positionX &&
             this.player.positionY < astroid.positionY + astroid.height &&
             this.player.height + this.player.positionY > astroid.positionY) {
-                document.getElementById("board").style.visibility = "hidden";
-                document.getElementsById("gameOver").style.visibility = "visible";
-                location.reload();
-
-
-
+            document.getElementById("board").style.visibility = "hidden";
+            this.stopMyScore();
+            document.getElementById("gameOver").style.visibility = "visible";
         }
     }
-    shoot(){
-        this.bullet = new Bullet();
+    shoot() {
+        this.bullet = new Bullet(this.player);
         this.bulletArr.push(this.bullet);
         this.bullet.domElement = this.createDomElm(this.bullet);
-        this.drawDomElm(this.bullet);
     }
 
     bulletdetectCollision(astroid) {
-        if (this.bullet.positionX < astroid.positionX + astroid.width &&
-            this.bullet.positionX + this.bullet.width > astroid.positionX &&
-            this.bullet.positionY < astroid.positionY + astroid.height &&
-            this.bullet.height + this.bullet.positionY > astroid.positionY) {
+        this.bulletArr.forEach((bullet) => {
+            if (bullet.positionX < astroid.positionX + astroid.width &&
+                bullet.positionX + bullet.width > astroid.positionX &&
+                bullet.positionY < astroid.positionY + astroid.height &&
+                bullet.height + bullet.positionY > astroid.positionY) {
+                astroid.domElement.remove();
+                let indexOfObstacle = this.obstaclesArr.indexOf(astroid);
+                this.obstaclesArr.splice(indexOfObstacle, 1);
+                let indexOfBullets = this.bulletArr.indexOf(bullet);
+                bullet.domElement.remove();
+                this.bulletArr.splice(indexOfBullets, 1);
+
 
             }
-        }
-
-    score() {
-        let count = document.getElementById("score")
-        console.log(count)
-        let counter = 0;
-        setInterval(() => {
-            
-            counter += 100 ;
-            count.innerHTML = counter;
-            
-        }, 1000)
+        })
 
     }
-    audioVolume(){
+
+    updateScore() {
+        let count = document.getElementById("score")
+        count.innerHTML = this.time * 1;
+    }
+    stopMyScore() {
+        clearInterval(this.intervalId);
+    }
+
+
+
+    audioVolume() {
         let audio = document.getElementById("myaudio");
         audio.volume = 0.1;
-        
+
     }
-   
 }
+
+const restart = document.querySelector(".button")
+restart.addEventListener("click", (event) => {
+    location.reload();
+});
 
 
 
@@ -142,16 +171,16 @@ class Player {
         }
 
     }
-    movesUp(){
-        if(this.positionY <= 25){
-            this.positionY +=5;
+    movesUp() {
+        if (this.positionY <= 25) {
+            this.positionY += 5;
         } else {
             console.log("Can't move outside playspace!")
         }
-        
+
     }
-    moveDown(){
-        if (this.positionY >= 0){
+    moveDown() {
+        if (this.positionY >= 0) {
             this.positionY -= 5;
         }
     }
@@ -170,26 +199,31 @@ class Obstacle {
     moveDown() {
         this.positionY -= 1;
     }
-    deletObstacle(element, arr) {
+    deletObstacle(element, arr, i) {
         if (element.positionY < 0.5) {
             element.domElement.remove()
-            arr.shift(element)
+            arr.splice(i, 1)
         }
-
     }
 }
 
-class Bullet{
-    constructor() {
+class Bullet {
+    constructor(x) {
         this.className = "bullets";
-        this.width  = 1;
+        this.width = 0.5;
         this.height = 2;
-        this.positionX = this.player.positionX + 2,5;
-        this.positionY = this.player.positionY;
+        this.positionX = x.positionX + 2, 5;
+        this.positionY = x.positionY + 5.1;
         this.domElement = null;
     }
-    bulletMoveUp(){
+    bulletMoveUp() {
         this.positionY += 1;
+    }
+    deletBullet(element, arr, i) {
+        if (element.positionY >= 100) {
+            element.domElement.remove();
+            arr.splice(i, 1);
+        }
     }
 }
 

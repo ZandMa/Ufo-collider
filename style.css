@@ -14,12 +14,10 @@ body {
     width: 70vw;
     margin: 0 0 0 15vw;
     border: solid black 1px;
-    z-index: 1;
     overflow: hidden;
     background: url("./media/wp7872665.webp");
     background-size: cover;
     position: relative;
-    z-index: 3;
     background-repeat: no-repeat;
     visibility: visible;
 }
@@ -75,5 +73,5 @@ body button{
 
 .bullets {
     position: absolute;
-    color: white;
+    background-color: rgb(255, 255, 255);
 }
