@@ -64,6 +64,8 @@ class Game {
         instance.domElement.style.left = instance.positionX + "%";
         instance.domElement.style.bottom = instance.positionY + "%";
     }
+
+
     detectCollisionWithPlayer(astroid) {
         if (this.player.positionX < astroid.positionX + astroid.width &&
             this.player.positionX + this.player.width > astroid.positionX &&
@@ -71,8 +73,7 @@ class Game {
             this.player.height + this.player.positionY > astroid.positionY) {
                 document.getElementById("board").style.visibility = "hidden";
                 document.getElementsById("gameOver").style.visibility = "visible";
-           
-            //location.reload();
+                location.reload();
 
 
 
