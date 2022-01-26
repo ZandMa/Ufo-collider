@@ -48,12 +48,9 @@ class Game {
                 this.player.moveDown();
             }
             this.drawDomElm(this.player);
-
-            if (event.key === "Space"){
-                this.shoot()
-            }
         });
     }
+    
     createDomElm(instance) {
         const htmlTag = document.createElement("div");
         htmlTag.className = instance.className;
@@ -72,13 +69,31 @@ class Game {
             this.player.positionX + this.player.width > astroid.positionX &&
             this.player.positionY < astroid.positionY + astroid.height &&
             this.player.height + this.player.positionY > astroid.positionY) {
-            //let reaload = document.getElementById("board")#
+                document.getElementById("board").style.visibility = "hidden";
+                document.getElementsById("gameOver").style.visibility = "visible";
+           
             //location.reload();
 
 
 
         }
     }
+    shoot(){
+        this.bullet = new Bullet();
+        this.bulletArr.push(this.bullet);
+        this.bullet.domElement = this.createDomElm(this.bullet);
+        this.drawDomElm(this.bullet);
+    }
+
+    bulletdetectCollision(astroid) {
+        if (this.bullet.positionX < astroid.positionX + astroid.width &&
+            this.bullet.positionX + this.bullet.width > astroid.positionX &&
+            this.bullet.positionY < astroid.positionY + astroid.height &&
+            this.bullet.height + this.bullet.positionY > astroid.positionY) {
+
+            }
+        }
+
     score() {
         let count = document.getElementById("score")
         console.log(count)
@@ -96,11 +111,7 @@ class Game {
         audio.volume = 0.1;
         
     }
-    shoot(){
-        let bullet = new Bullet();
-        bullet.domElement = this.createDomElm(bullet);
-        this.drawDomElm(bullet);
-    }
+   
 }
 
 
@@ -169,12 +180,15 @@ class Obstacle {
 
 class Bullet{
     constructor() {
-        this.className = "bullets"
+        this.className = "bullets";
         this.width  = 1;
         this.height = 2;
-        this.positionX = this.player.positionX + 2,5
-        this.positionY = this.player.positionY
+        this.positionX = this.player.positionX + 2,5;
+        this.positionY = this.player.positionY;
         this.domElement = null;
+    }
+    bulletMoveUp(){
+        this.positionY += 1;
     }
 }
 

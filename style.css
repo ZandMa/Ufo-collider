@@ -21,6 +21,7 @@ body {
     position: relative;
     z-index: 3;
     background-repeat: no-repeat;
+    visibility: visible;
 }
 
 .player {
@@ -46,6 +47,7 @@ body {
     margin: 0;
     text-align: center;
     visibility: hidden;
+    color: red;
     
 }
 body button{
