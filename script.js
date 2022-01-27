@@ -35,7 +35,7 @@ class Game {
                 obstacle.moveDown();
                 this.drawDomElm(obstacle);
                 this.detectCollisionWithPlayer(obstacle);
-                this.bulletdetectCollision(obstacle)                
+                this.bulletdetectCollision(obstacle);                
             })
 
             // iterate throuh bulletArr
@@ -124,7 +124,7 @@ class Game {
 
     updateScore() {
         let count = document.getElementById("score")
-        count.innerHTML = this.time * 1;
+        count.innerHTML = this.time * 2;
     }
     stopMyScore() {
         clearInterval(this.intervalId);
