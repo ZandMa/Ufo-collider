@@ -12,7 +12,7 @@ body {
 #board {
     height: 65%;
     width: 65%;
-    margin: 0 0 0 20vw;
+    margin: 0 0 0 17.5%;
     border: solid black 1px;
     overflow: hidden;
     background: url("./media/wp7872665.webp");
@@ -40,7 +40,6 @@ body {
 #gameOver {
     font-size: 30px;
     position: relative;
-    margin: 1000;
     text-align: center;
     visibility: hidden;
     color: red;
@@ -55,6 +54,7 @@ body button{
     text-align: center;
     margin: 0px;
     color: red;
+    position: relative;
     
 }
 

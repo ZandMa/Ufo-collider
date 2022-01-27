@@ -101,6 +101,10 @@ class Game {
         this.bullet = new Bullet(this.player);
         this.bulletArr.push(this.bullet);
         this.bullet.domElement = this.createDomElm(this.bullet);
+        let audioShoot = new Audio("./media/heat-vision.mp3");
+            audioShoot.loop = false;
+            audioShoot.play();
+            audioShoot.volume = 0.03; 
     }
 
     bulletdetectCollision(astroid) {
@@ -134,7 +138,7 @@ class Game {
 
     audioVolume() {
         let audio = document.getElementById("myaudio");
-        audio.volume = 0.1;
+        audio.volume = 0.05;
 
     }
 }
