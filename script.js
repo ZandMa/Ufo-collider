@@ -1,7 +1,7 @@
 class Game {
     constructor() {
         this.obstaclesArr = [];
-        this.refreshRate = 1000 / 30;
+        this.refreshRate = 1000 / 70;
         this.obstacleSpawnRate = 600;
         this.bulletArr = [];
         this.time = 0;
@@ -44,7 +44,7 @@ class Game {
                 this.drawDomElm(bullet);
                 bullet.deletBullet(bullet, this.bulletArr, index);
             })
-            
+            if(this.time % 15 === 0)
             this.updateScore();
 
         }, this.refreshRate);
@@ -210,9 +210,9 @@ class Obstacle {
 class Bullet {
     constructor(x) {
         this.className = "bullets";
-        this.width = 0.5;
-        this.height = 2;
-        this.positionX = x.positionX + 2, 5;
+        this.width = 1;
+        this.height = 5;
+        this.positionX = x.positionX + 1.8;
         this.positionY = x.positionY + 5.1;
         this.domElement = null;
     }

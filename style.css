@@ -73,5 +73,6 @@ body button{
 
 .bullets {
     position: absolute;
-    background-color: rgb(255, 255, 255);
+    background-image: url("./media/laser.png");
+    background-size: cover;
 }
