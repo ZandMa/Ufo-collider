@@ -1,11 +1,11 @@
 body {
-    overflow: hidden;
     visibility: visible;
     background-image: url("./media/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
     
 }
 
@@ -39,10 +39,8 @@ body {
 }
 #gameOver {
     font-size: 30px;
-    z-index: 100;
-    margin:auto;
     position: relative;
-    margin: 0;
+    margin: 0 auto;
     text-align: center;
     visibility: hidden;
     color: red;

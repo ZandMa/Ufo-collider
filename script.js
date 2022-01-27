@@ -35,7 +35,7 @@ class Game {
                 obstacle.moveDown();
                 this.drawDomElm(obstacle);
                 this.detectCollisionWithPlayer(obstacle);
-                this.bulletdetectCollision(obstacle);                
+                this.bulletdetectCollision(obstacle)                
             })
 
             // iterate throuh bulletArr
